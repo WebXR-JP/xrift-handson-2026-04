@@ -298,7 +298,6 @@ class: text-center
   <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40">xrift CLI</span>
 </div>
 
-<div class="mt-8 text-base opacity-60">所要時間の目安: 約 10 分</div>
 
 </div>
 
@@ -600,14 +599,7 @@ class: text-center
 
 # ワールドを作ろう
 
-<div class="text-2xl opacity-70 mt-4">ここからがハンズオン本編</div>
 
-<div class="mt-8 flex gap-3 text-sm">
-  <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40">3 ステップ</span>
-  <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40">少しずつ育てる</span>
-</div>
-
-<div class="mt-8 text-base opacity-60">所要時間の目安: 約 35 分</div>
 
 </div>
 
@@ -1343,16 +1335,17 @@ layout: default
 layout: default
 ---
 
-# もっとできること
+# 応用
 
-<div class="text-lg opacity-80 mt-1">
-  今日体験した基本に加えて、こんな機能も組み込めます
+<div class="text-sm opacity-80 mt-1">
+  早めに終わった方・もっと作りたい方はXRIFTのコンポーネントを使ってみよう！
+  例えば、このようなことができます。
 </div>
 
 <div class="grid grid-cols-2 gap-4 mt-4">
 
 <div class="rounded-xl overflow-hidden border border-purple-400/30 bg-purple-500/5">
-  <img src="/feature-shots/screen-share.png" class="w-full h-32 object-cover" alt="画面共有" />
+  <img src="/feature-shots/screen-share.png" class="w-full h-24 object-cover" alt="画面共有" />
   <div class="p-3">
     <div class="font-bold text-purple-300 text-lg">画面共有</div>
     <div class="text-sm opacity-80">他のユーザーと画面をリアルタイム共有</div>
@@ -1360,7 +1353,7 @@ layout: default
 </div>
 
 <div class="rounded-xl overflow-hidden border border-purple-400/30 bg-purple-500/5">
-  <img src="/feature-shots/live-stream.png" class="w-full h-32 object-cover" alt="ライブ配信" />
+  <img src="/feature-shots/live-stream.png" class="w-full h-24 object-cover" alt="ライブ配信" />
   <div class="p-3">
     <div class="font-bold text-purple-300 text-lg">ライブ配信</div>
     <div class="text-sm opacity-80">PebbleChat 経由で HLS 配信を表示</div>
@@ -1368,7 +1361,7 @@ layout: default
 </div>
 
 <div class="rounded-xl overflow-hidden border border-purple-400/30 bg-purple-500/5">
-  <img src="/feature-shots/portal.png" class="w-full h-32 object-cover" alt="ポータル" />
+  <img src="/feature-shots/portal.png" class="w-full h-24 object-cover" alt="ポータル" />
   <div class="p-3">
     <div class="font-bold text-purple-300 text-lg">ワールドポータル</div>
     <div class="text-sm opacity-80">別のワールドへ移動できるゲートを設置</div>
@@ -1376,7 +1369,7 @@ layout: default
 </div>
 
 <div class="rounded-xl overflow-hidden border border-purple-400/30 bg-purple-500/5">
-  <img src="/feature-shots/mirror.png" class="w-full h-32 object-cover" alt="ミラー" />
+  <img src="/feature-shots/mirror.png" class="w-full h-24 object-cover" alt="ミラー" />
   <div class="p-3">
     <div class="font-bold text-purple-300 text-lg">ミラー</div>
     <div class="text-sm opacity-80">リアルタイム反射面を設置</div>
@@ -1386,7 +1379,7 @@ layout: default
 </div>
 
 <div class="mt-3 p-2 rounded-lg bg-purple-500/10 border-l-4 border-purple-400 text-sm">
-  全コンポーネント一覧: <code class="text-purple-300">docs.xrift.net/world-components/components</code>
+  このドキュメントをもとに実装してみよう！: <a href="https://docs.xrift.net/world-components/components" class="text-purple-300">https://docs.xrift.net/world-components/components</a>
 </div>
 
 ---
@@ -1400,15 +1393,7 @@ class: text-center
 
 # アップロードして公開
 
-<div class="text-2xl opacity-70 mt-4">URL を共有できる状態にしよう</div>
 
-<div class="mt-8 flex gap-3 text-sm">
-  <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40">build</span>
-  <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40">upload</span>
-  <span class="px-3 py-1 rounded-full bg-purple-500/20 border border-purple-400/40">share</span>
-</div>
-
-<div class="mt-8 text-base opacity-60">所要時間の目安: 約 15 分</div>
 
 </div>
 
