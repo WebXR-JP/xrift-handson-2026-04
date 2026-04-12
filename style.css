@@ -1,0 +1,100 @@
+/* XRift Handson — global overrides
+   - Base font: Noto Sans JP
+   - Min body size: 18px */
+
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&family=JetBrains+Mono:wght@400;600&display=swap');
+
+:root {
+  --slidev-theme-primary: #8b5cf6;
+}
+
+.slidev-layout {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic UI', system-ui, sans-serif;
+  font-size: 20px;
+  line-height: 1.7;
+  letter-spacing: 0.01em;
+}
+
+.slidev-layout h1,
+.slidev-layout h2,
+.slidev-layout h3,
+.slidev-layout h4 {
+  font-family: 'Noto Sans JP', 'Hiragino Sans', 'Yu Gothic UI', system-ui, sans-serif;
+}
+
+.slidev-layout h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  color: #a78bfa;
+  line-height: 1.2;
+}
+
+.slidev-layout h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #c4b5fd;
+}
+
+.slidev-layout h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ddd6fe;
+}
+
+.slidev-layout p,
+.slidev-layout li {
+  font-size: 1.15rem;
+}
+
+.slidev-layout code {
+  font-family: 'JetBrains Mono', 'Fira Code', monospace;
+  font-size: 0.95em;
+  background: rgba(139, 92, 246, 0.15);
+  color: #c4b5fd;
+  padding: 0.1em 0.4em;
+  border-radius: 0.25em;
+}
+
+.slidev-layout pre code {
+  font-size: 1rem;
+  background: transparent;
+  color: inherit;
+  padding: 0;
+}
+
+.slidev-layout pre {
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+}
+
+.slidev-layout table {
+  font-size: 1.1rem;
+  width: 100%;
+}
+
+.slidev-layout th {
+  color: #c4b5fd;
+  border-bottom: 2px solid rgba(139, 92, 246, 0.5);
+  text-align: left;
+}
+
+.slidev-layout td {
+  border-bottom: 1px solid rgba(139, 92, 246, 0.15);
+}
+
+.slidev-layout th,
+.slidev-layout td {
+  padding: 0.6rem 0.9rem;
+}
+
+.slidev-layout a {
+  color: #c4b5fd;
+  text-decoration: underline;
+  text-decoration-color: rgba(139, 92, 246, 0.5);
+}
+
+.slidev-layout a:hover {
+  text-decoration-color: #c4b5fd;
+}

@@ -1,0 +1,8 @@
+node_modules
+.slidev
+dist
+dist-check
+*.log
+.DS_Store
+sample-world/
+slides-export.pdf
