@@ -437,7 +437,7 @@ layout: default
   <div class="p-3 rounded-xl bg-purple-500/10 border border-purple-400/30 text-base">
     <div class="font-bold text-purple-300 text-lg mb-1">インストール手順</div>
     <ol class="text-sm space-y-0.5 list-decimal list-inside">
-      <li>nodejs.org を開く</li>
+      <li><a href="https://nodejs.org">nodejs.org</a> を開く</li>
       <li><b>LTS</b>（推奨版）をダウンロード</li>
       <li>インストーラーを実行（「次へ」で OK）</li>
     </ol>
@@ -456,7 +456,7 @@ npm --version
 
 <div>
   <img src="/setup-shots/nodejs-download.png" class="rounded-lg border border-slate-600/50 shadow-lg" alt="Node.js ダウンロードページ" />
-  <div class="text-xs opacity-60 mt-1 text-center">nodejs.org — LTS（推奨版）を選んでください</div>
+  <div class="text-xs opacity-60 mt-1 text-center"><a href="https://nodejs.org">nodejs.org</a> — LTS（推奨版）を選んでください</div>
 </div>
 
 </div>
@@ -895,7 +895,7 @@ layout: default
 
 ターミナルで下記を入力します
 ```bash
-npm install # 1. 開発環境ーを起動するのに必要なソフトウェアをインストール
+npm install # 1. 必要なパッケージをインストール
 npm run dev # 2. 開発環境を起動
 ```
 
@@ -1041,7 +1041,7 @@ layout: default
 # Three.js で使える 3D モデル
 
 <div class="text-lg opacity-80 mt-1">
-  Three.js は <code>.glb</code>（glTF）や <code>.fbx</code> など主要な 3D 形式に対応しています
+  Three.js は主要な 3D 形式（<code>.glb</code> / <code>.fbx</code> など）に対応しています
 </div>
 
 <div class="mt-5 space-y-4">
@@ -1064,7 +1064,7 @@ layout: default
   <div class="p-3 rounded-xl border border-purple-400/30 bg-purple-500/5 flex flex-col justify-center">
     <div class="text-sm space-y-1">
       <div class="flex items-center gap-1"><span class="text-purple-400">▸</span> <b class="text-purple-300">Sketchfab</b> — 大規模 3D モデルマーケット</div>
-      <div class="flex items-center gap-1"><span class="text-purple-400">▸</span> <b class="text-purple-300">poly.pizza</b> — ローポリ素材中心</div>
+      <div class="flex items-center gap-1"><span class="text-purple-400">▸</span> <a href="https://poly.pizza" class="text-purple-300 font-bold">poly.pizza</a> — ローポリ素材中心</div>
     </div>
   </div>
 </div>
@@ -1197,7 +1197,7 @@ layout: default
 # Skybox とは？
 
 <div class="text-lg opacity-80 mt-1">
-  プレイヤーの周囲を巨大な球で囲み、内側にパノラマ画像を貼ることで空や背景を表現するしくみです
+  巨大な球でプレイヤーを囲み、内側にパノラマ画像を貼って空や背景を表現するしくみです
 </div>
 
 <div class="grid grid-cols-2 gap-5 mt-5">
@@ -1536,7 +1536,7 @@ layout: default
 
 <div class="p-5 rounded-xl bg-purple-500/10 border border-purple-400/30">
   <div class="font-bold text-purple-300 text-2xl">今日やったこと</div>
-  <div class="mt-2 opacity-90">Node.js / XRift CLI を入れて、テンプレートからプロジェクトを作り、コメントを外しながら箱・3D モデル・スカイボックスを配置して公開しました</div>
+  <div class="mt-2 opacity-90">環境構築 → プロジェクト作成 → コード編集 → アップロードの流れを体験しました</div>
 </div>
 
 <div class="p-5 rounded-xl bg-purple-500/10 border border-purple-400/30">
