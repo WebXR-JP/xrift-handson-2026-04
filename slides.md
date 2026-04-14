@@ -20,7 +20,7 @@ class: text-center
 highlighter: shiki
 drawings:
   persist: false
-transition: slide-left
+transition: none
 mdc: true
 colorSchema: dark
 fonts:
