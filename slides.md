@@ -74,14 +74,33 @@ h2 {
 layout: default
 ---
 
-# 本日のゴール
+# ご参加ありがとうございます！
 
-<div class="text-2xl mt-12 leading-relaxed">
-  XRift でのワールド制作の流れを<br/>
-  <span class="text-purple-300 font-bold">つくる → 確認する → 公開する</span><br/>
-  ひと通り体験しよう
+<div class="text-xl mt-4 leading-relaxed">
+  本日は <span class="text-purple-300 font-bold">XRift ハンズオン</span> にご参加いただきありがとうございます！<br/>
+  JavaScript を使って、ブラウザで動く 3D メタバースワールドを一緒に作っていきましょう。
 </div>
 
+<div class="mt-5 text-lg">
+  <span class="font-bold">本日のゴール：</span>ワールド制作の流れを
+  <span class="text-purple-300 font-bold">つくる → 確認する → 公開する</span>
+  ひと通り体験すること
+</div>
+
+<div class="mt-5 space-y-3 text-base">
+
+<div class="p-3 rounded-lg bg-yellow-500/10 border-l-4 border-yellow-400">
+  <div class="font-bold text-yellow-300 mb-1">事前準備がまだの方へ</div>
+  環境構築（Node.js・VS Code・XRift CLI のインストール）がまだの方は、開始までの時間で進めておいていただけるとスムーズです。手順はこの後の PART 1 で説明します。
+</div>
+
+<div class="p-3 rounded-lg bg-purple-500/10 border-l-4 border-purple-400">
+  <div class="font-bold text-purple-300 mb-1">このハンズオンについて</div>
+  スライド資料は Discord で共有しています。<br/>
+  まだ Discord に参加されていない方は、connpass のイベントページからご参加ください！
+</div>
+
+</div>
 
 ---
 layout: default
