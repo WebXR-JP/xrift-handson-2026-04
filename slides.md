@@ -779,10 +779,6 @@ layout: default
 
 </div>
 
-<div class="mt-6 p-3 rounded-lg bg-purple-500/10 border-l-4 border-purple-400 text-base">
-  各ステップで <code class="text-purple-300">src/World.tsx</code> のコメントを外す → 保存 → ブラウザで確認
-</div>
-
 ---
 layout: section
 class: text-center
@@ -1494,6 +1490,44 @@ layout: default
 
 <div class="mt-5 p-3 rounded-lg bg-purple-500/10 border-l-4 border-purple-400 text-base">
   ここまでできたら今日のゴール達成です！
+</div>
+
+---
+
+# AI でワールドをカスタマイズしよう
+
+<div class="text-lg opacity-80 mt-1">XRift は AI との相性がバツグンです</div>
+
+<div class="grid grid-cols-2 gap-6 mt-5">
+
+<div>
+
+XRift のワールドは **React のコード（World.tsx）** で作られているので、AI に「こんなワールドにして！」と伝えるだけでコードを生成してもらえます。
+
+<div class="mt-4 p-3 rounded-lg bg-purple-500/10 border-l-4 border-purple-400 text-sm">
+
+**XRift Vibe Coding Gem** を作りました！
+
+Google Gemini の Gem（カスタムエージェント）に XRift のドキュメントを学習させています。「宇宙っぽいワールドにして」「ボタンを置きたい」など話しかけるだけで World.tsx を生成してくれます。
+
+<a href="https://gemini.google.com/gem/625e07da3722" target="_blank" class="inline-block mt-2 px-3 py-1 bg-purple-500/20 rounded text-purple-300 hover:bg-purple-500/30">
+  Gem を使ってみる →
+</a>
+
+</div>
+
+<div class="mt-3 text-sm opacity-70">
+  生成されたコードを <code class="text-purple-300">src/World.tsx</code> に貼り付けて保存するだけ！<br/>
+  自分好みにカスタマイズしてみましょう。
+</div>
+
+</div>
+
+<div>
+  <img src="/gemini-gem.png" class="w-full rounded-lg border border-purple-400/30 shadow-lg" alt="XRift Vibe Coding Gem on Gemini" />
+  <div class="text-xs opacity-50 mt-2 text-center">Gemini Gem でワールドのコードを生成している様子</div>
+</div>
+
 </div>
 
 ---
