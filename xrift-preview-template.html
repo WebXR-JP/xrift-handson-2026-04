@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XRift World Preview</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+      body { background: #1a1a2e; }
+      #overlay {
+        position: fixed; top: 12px; left: 12px; z-index: 10;
+        display: flex; gap: 8px; pointer-events: none;
+      }
+      .tag { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-family: system-ui, sans-serif; }
+      .tag-brand { background: #7c3aed; color: white; font-weight: 600; }
+      .tag-info { background: rgba(0,0,0,0.5); color: #999; }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.1.0",
+          "react/": "https://esm.sh/react@19.1.0/",
+          "react-dom": "https://esm.sh/react-dom@19.1.0?external=react",
+          "react-dom/client": "https://esm.sh/react-dom@19.1.0/client?external=react",
+          "three": "https://esm.sh/three@0.183.0",
+          "three/": "https://esm.sh/three@0.183.0/",
+          "@react-three/fiber": "https://esm.sh/@react-three/fiber@9?external=react,react-dom,three",
+          "@react-three/drei": "https://esm.sh/@react-three/drei@10?external=react,react-dom,three,@react-three/fiber",
+          "htm/react": "https://esm.sh/htm@3.1.1/react?external=react"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="overlay">
+      <span class="tag tag-brand">XRift Preview</span>
+      <span class="tag tag-info">Drag: rotate · Scroll: zoom</span>
+    </div>
+
+    <script type="module">
+      import { html } from 'htm/react'
+      import React, { useState, useRef, useCallback, useMemo, useEffect, Suspense } from 'react'
+      import { createRoot } from 'react-dom/client'
+      import { Canvas, useFrame } from '@react-three/fiber'
+      import { OrbitControls, Text, Gltf, useTexture, Float, Sky, Environment } from '@react-three/drei'
+      import * as THREE from 'three'
+
+      // ── XRift API スタブ ──
+      const useXRift = () => ({ baseUrl: './' })
+      const SpawnPoint = () => null
+      const RigidBody = ({ children }) => html`<>${children}</>`
+      const CuboidCollider = () => null
+      const Interactable = ({ children, onInteract }) => html`<group onClick=${onInteract}>${children}</group>`
+      const useInstanceState = (key, init) => useState(init)
+      const useTeleport = () => ({ teleport: () => {} })
+      const useUsers = () => ({
+        localUser: { id: 'preview', displayName: 'Preview', userIconUrl: null, isGuest: false },
+        remoteUsers: [],
+        getMovement: () => ({ position: { x: 0, y: 1.6, z: 0 } }),
+        getLocalMovement: () => ({ position: { x: 0, y: 1.6, z: 5 } }),
+      })
+      const Mirror = () => null
+      const VideoPlayer = () => null
+      const Portal = () => null
+      const TagBoard = () => null
+      const BillboardY = ({ children, ...p }) => html`<group ...${p}>${children}</group>`
+      const LAYERS = { DEFAULT: 0, FIRST_PERSON_ONLY: 9, THIRD_PERSON_ONLY: 10, INTERACTABLE: 11 }
+
+      // ★★★ World コンポーネント（htm 構文で記述）★★★
+      const World = () => {
+        return html`
+          <group>
+            <ambientLight intensity=${0.6} />
+            <directionalLight position=${[5, 10, 5]} />
+
+            <mesh rotation=${[-Math.PI / 2, 0, 0]}>
+              <planeGeometry args=${[20, 20]} />
+              <meshStandardMaterial color="#3a3a4a" />
+            </mesh>
+
+            <mesh position=${[0, 0.5, 0]}>
+              <boxGeometry args=${[1, 1, 1]} />
+              <meshStandardMaterial color="orange" />
+            </mesh>
+          </group>
+        `
+      }
+
+      // ── レンダリング ──
+      createRoot(document.getElementById('root')).render(html`
+        <${Canvas}
+          camera=${{ position: [0, 3, 8], fov: 60 }}
+          style=${{ background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}
+        >
+          <${Suspense} fallback=${null}>
+            <${World} />
+          </${Suspense}>
+          <${OrbitControls} makeDefault enableDamping dampingFactor=${0.05} />
+          <gridHelper args=${[20, 20, '#444', '#333']} />
+        </${Canvas}>
+      `)
+    </script>
+  </body>
+</html>

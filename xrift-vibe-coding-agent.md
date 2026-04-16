@@ -1622,3 +1622,198 @@ public/ に以下のファイルを配置してください：
 npm run dev
 # ブラウザで http://localhost:5173 を開いて確認
 ```
+
+### 6. Canvas プレビュー（HTML）
+
+**World.tsx を生成したら、必ず Canvas（HTML 出力）としてプレビュー用 HTML も出力してください。** これにより、ユーザーはプロジェクトをセットアップする前に、ブラウザ上でワールドの見た目をすぐに確認できます。
+
+#### 重要な制約（Gemini Canvas のサンドボックス）
+
+Gemini Canvas は CSP（Content Security Policy）により以下が**使用禁止**です：
+
+- `<script src="...">` による外部クラシックスクリプト読み込み（Babel standalone 等）
+- `new Function()` / `eval()` による動的コード評価
+- `<script type="text/x-world">` 等の非標準スクリプトタグ
+
+そのため Canvas プレビューでは **JSX は使えません**。代わりに **htm**（Hyperscript Tagged Markup）を使います。htm は `<script type="module">` 内でそのまま動作し、ビルド不要です。
+
+#### JSX → htm 変換ルール
+
+| JSX | htm |
+|---|---|
+| `<Component>` | `` <${Component}> `` |
+| `</Component>` | `` </${Component}> `` |
+| `<Component />` | `` <${Component} /> `` |
+| `prop={value}` | `` prop=${value} `` |
+| `prop="string"` | `prop="string"`（同じ） |
+| `{expression}` | `` ${expression} `` |
+| `{/* comment */}` | 削除する |
+| `<mesh>`, `<boxGeometry>` 等 | そのまま（小文字タグは変換不要） |
+
+**条件レンダリングの例：**
+
+```js
+// JSX:  {showBox && <mesh><boxGeometry /></mesh>}
+// htm:
+${showBox && html`<mesh><boxGeometry /></mesh>`}
+```
+
+**map の例：**
+
+```js
+// JSX:  {items.map(item => <mesh key={item.id} position={item.pos} />)}
+// htm:
+${items.map(item => html`<mesh key=${item.id} position=${item.pos} />`)}
+```
+
+#### テンプレート構造
+
+Canvas プレビューの HTML は以下の構造で出力してください。`<script src>` や `<script type="text/x-world">` は **絶対に使わないでください**。すべてのコードを 1 つの `<script type="module">` 内に書きます。
+
+```html
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XRift World Preview</title>
+    <style>
+      * { margin: 0; padding: 0; box-sizing: border-box; }
+      html, body, #root { width: 100%; height: 100%; overflow: hidden; }
+      body { background: #1a1a2e; }
+      #overlay {
+        position: fixed; top: 12px; left: 12px; z-index: 10;
+        display: flex; gap: 8px; pointer-events: none;
+      }
+      .tag { padding: 4px 10px; border-radius: 6px; font-size: 12px; font-family: system-ui, sans-serif; }
+      .tag-brand { background: #7c3aed; color: white; font-weight: 600; }
+      .tag-info { background: rgba(0,0,0,0.5); color: #999; }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://esm.sh/react@19.1.0",
+          "react/": "https://esm.sh/react@19.1.0/",
+          "react-dom": "https://esm.sh/react-dom@19.1.0?external=react",
+          "react-dom/client": "https://esm.sh/react-dom@19.1.0/client?external=react",
+          "three": "https://esm.sh/three@0.183.0",
+          "three/": "https://esm.sh/three@0.183.0/",
+          "@react-three/fiber": "https://esm.sh/@react-three/fiber@9?external=react,react-dom,three",
+          "@react-three/drei": "https://esm.sh/@react-three/drei@10?external=react,react-dom,three,@react-three/fiber",
+          "htm/react": "https://esm.sh/htm@3.1.1/react?external=react"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <div id="overlay">
+      <span class="tag tag-brand">XRift Preview</span>
+      <span class="tag tag-info">Drag: rotate · Scroll: zoom</span>
+    </div>
+
+    <script type="module">
+      import { html } from 'htm/react'
+      import React, { useState, useRef, useCallback, useMemo, useEffect, Suspense } from 'react'
+      import { createRoot } from 'react-dom/client'
+      import { Canvas, useFrame } from '@react-three/fiber'
+      import { OrbitControls, Text, Gltf, useTexture, Float, Sky, Environment } from '@react-three/drei'
+      import * as THREE from 'three'
+
+      // ── XRift API スタブ ──
+      const useXRift = () => ({ baseUrl: './' })
+      const SpawnPoint = () => null
+      const RigidBody = ({ children }) => html`<>${children}</>`
+      const CuboidCollider = () => null
+      const Interactable = ({ children, onInteract }) => html`<group onClick=${onInteract}>${children}</group>`
+      const useInstanceState = (key, init) => useState(init)
+      const useTeleport = () => ({ teleport: () => {} })
+      const useUsers = () => ({
+        localUser: { id: 'preview', displayName: 'Preview', userIconUrl: null, isGuest: false },
+        remoteUsers: [],
+        getMovement: () => ({ position: { x: 0, y: 1.6, z: 0 } }),
+        getLocalMovement: () => ({ position: { x: 0, y: 1.6, z: 5 } }),
+      })
+      const Mirror = () => null
+      const VideoPlayer = () => null
+      const Portal = () => null
+      const TagBoard = () => null
+      const BillboardY = ({ children, ...p }) => html`<group ...${p}>${children}</group>`
+      const LAYERS = { DEFAULT: 0, FIRST_PERSON_ONLY: 9, THIRD_PERSON_ONLY: 10, INTERACTABLE: 11 }
+
+      // ★★★ World コンポーネント（htm 構文で記述）★★★
+      // ここにワールドのコードを htm 構文で記述する
+      const World = () => {
+        return html`
+          <group>
+            <ambientLight intensity=${0.6} />
+            <directionalLight position=${[5, 10, 5]} />
+
+            <mesh rotation=${[-Math.PI / 2, 0, 0]}>
+              <planeGeometry args=${[20, 20]} />
+              <meshStandardMaterial color="#3a3a4a" />
+            </mesh>
+
+            <mesh position=${[0, 0.5, 0]}>
+              <boxGeometry args=${[1, 1, 1]} />
+              <meshStandardMaterial color="orange" />
+            </mesh>
+          </group>
+        `
+      }
+
+      // ── レンダリング ──
+      createRoot(document.getElementById('root')).render(html`
+        <${Canvas}
+          camera=${{ position: [0, 3, 8], fov: 60 }}
+          style=${{ background: 'linear-gradient(180deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)' }}
+        >
+          <${Suspense} fallback=${null}>
+            <${World} />
+          </${Suspense}>
+          <${OrbitControls} makeDefault enableDamping dampingFactor=${0.05} />
+          <gridHelper args=${[20, 20, '#444', '#333']} />
+        </${Canvas}>
+      `)
+    </script>
+  </body>
+</html>
+```
+
+#### Canvas プレビューのルール
+
+1. **すべてのコードを 1 つの `<script type="module">` 内に書く**
+   - `<script src="...">` は使わない（CSP で拒否される）
+   - `<script type="text/x-world">` 等の非標準タグは使わない
+   - `new Function()` / `eval()` は使わない
+   - World もサブコンポーネントもすべて `<script type="module">` 内に htm 構文で直接定義する
+
+2. **htm 構文を使う（JSX は使わない）**
+   - React コンポーネント（大文字始まり）: `` html`<${Component}>...</${Component}>` ``
+   - R3F 要素（小文字始まり）: `` html`<mesh>...</mesh>` `` （そのまま）
+   - JS 値のプロパティ: `` prop=${value} ``
+   - 文字列プロパティ: `prop="string"`（そのまま）
+
+3. **drei の import は必要なものだけ**
+   - 全部 import すると重いので、World で使うコンポーネントだけ import する
+   - よく使うもの: `OrbitControls, Text, Gltf, useTexture, Float, Sky, Environment`
+
+4. **プレビューで動作するもの**
+   - 基本図形（mesh, boxGeometry, sphereGeometry 等）
+   - ライティング（ambientLight, directionalLight, pointLight）
+   - マテリアル（meshStandardMaterial, meshBasicMaterial 等）
+   - drei コンポーネント（Text, Float, Sky, Environment 等）
+   - アニメーション（useFrame）
+   - Interactable のクリック（onClick として動作）
+
+5. **プレビューで動作しないもの**
+   - 物理演算（RigidBody はパススルー）
+   - `baseUrl` 経由のローカルアセット → 外部 URL なら OK
+   - マルチプレイヤー（useUsers はダミー）
+   - テレポート / ポータル / 動画 / 画面共有
+
+#### Canvas プレビューの出力タイミング
+
+- World.tsx を生成するたびに、Canvas HTML も合わせて出力する
+- Canvas 出力はコード実行パネル（Canvas 機能）を使って表示する
+- ユーザーが「プレビューだけ見たい」と言った場合は、World.tsx なしで Canvas HTML のみ出力してもよい
